@@ -62,7 +62,7 @@ class OpeningScreen extends StatelessWidget {
             Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-                width: double.infinity,
+                width: 10,
                 color: Colors.green,
                 child: ElevatedButton(
                     onPressed: () {}, child: const Text("Start"))),
