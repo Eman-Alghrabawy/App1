@@ -1,25 +1,91 @@
+import 'package:app_e/Screens/quiz_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatelessWidget {
   CategoryScreen({super.key});
 
-  List quizName = ["Sport Test", "History Test", "General Test"];
-  List quizColor = [Colors.blue, Colors.red, Colors.yellow];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: [
-        for (int i = 0; i < 3; i++)
-          Expanded(
-              child: Container(
-                  decoration: BoxDecoration(
-                    color: quizColor[i],
-                    border: Border.all(width: 1, color: Colors.black),
+        Expanded(
+          child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.green,
+                border: Border.all(width: 1, color: Colors.black),
+              ),
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => QuizScreen(),
+                      ),
+                    );
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.green,
+                    ),
                   ),
-                  child: Center(
-                    child: Text(quizName[i]),
-                  )))
+                  child: const Text(
+                    "sport",
+                    style: TextStyle(color: Colors.white),
+                  ))),
+        ),
+        Expanded(
+          child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                border: Border.all(width: 1, color: Colors.black),
+              ),
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => QuizScreen(),
+                      ),
+                    );
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.red,
+                    ),
+                  ),
+                  child: const Text(
+                    "General",
+                    style: TextStyle(color: Colors.white),
+                  ))),
+        ),
+        Expanded(
+          child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                border: Border.all(width: 1, color: Colors.black),
+              ),
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => QuizScreen(),
+                      ),
+                    );
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.blue,
+                    ),
+                  ),
+                  child: const Text(
+                    "History",
+                    style: TextStyle(color: Colors.white),
+                  ))),
+        ),
       ]),
     );
   }
