@@ -1,8 +1,4 @@
-import 'package:app_e/Screens/category_screen.dart';
 import 'package:app_e/Screens/openingscreen.dart';
-import 'package:app_e/Screens/quiz_screen.dart';
-import 'package:app_e/Screens/score.dart';
-
 import 'package:flutter/material.dart';
 
 void main() {
