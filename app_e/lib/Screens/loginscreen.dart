@@ -1,3 +1,4 @@
+import 'package:app_e/Screens/category_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -28,6 +29,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               Expanded(
                   child: Container(
+                padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(240, 255, 255, 255),
                   borderRadius: BorderRadius.only(
@@ -55,6 +57,10 @@ class LoginScreen extends StatelessWidget {
                       decoration: InputDecoration(
                         labelText: 'Username',
                         labelStyle: const TextStyle(color: Colors.grey),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: const BorderSide(
@@ -77,6 +83,10 @@ class LoginScreen extends StatelessWidget {
                       decoration: InputDecoration(
                         labelText: 'Password',
                         labelStyle: const TextStyle(color: Colors.grey),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.0),
                           borderSide: const BorderSide(
@@ -95,10 +105,8 @@ class LoginScreen extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.01,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.5,
-                        ),
                         const Text(
                           'New to quizz app?',
                           style: TextStyle(
@@ -129,7 +137,15 @@ class LoginScreen extends StatelessWidget {
                               Colors.green,
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    CategoryScreen(),
+                              ),
+                            );
+                          },
                           child: const Text(
                             "Login",
                             style: TextStyle(
@@ -137,49 +153,44 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                         )),
-                    Image.asset(
-                      "images/logo2.png",
-                      height: MediaQuery.of(context).size.height * 0.1,
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.02,
+                    const Icon(
+                      Icons.fingerprint,
+                      color: Colors.blue,
+                      size: 50,
                     ),
                     const Text(
-                      'Use Touch ID',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15,
-                      ),
+                      "Touch ID",
+                      style: TextStyle(color: Colors.grey),
                     ),
                     const Spacer(),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.1,
+                        Row(
+                          children: [
+                            Checkbox(
+                                value: true,
+                                activeColor: Colors.green,
+                                onChanged: (value) {}),
+                            const Text("Remember me"),
+                          ],
                         ),
-                        TextButton(
-                          onPressed: () {},
+
+                        // Spacer(),
+                        InkWell(
+                          onTap: () {
+                            print("Hello we are ITI");
+                          },
                           child: const Text(
-                            'Remember me',
+                            "Forget password",
                             style: TextStyle(
-                              color: Colors.black,
-                            ),
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.2,
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Forget password?',
-                            style: TextStyle(
-                              color: Colors.green,
-                            ),
-                          ),
-                        ),
+                        )
                       ],
-                    ),
+                    )
                   ],
                 ),
               )),

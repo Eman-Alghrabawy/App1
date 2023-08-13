@@ -1,3 +1,4 @@
+import 'package:app_e/Screens/loginscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -62,10 +63,26 @@ class OpeningScreen extends StatelessWidget {
             Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-                width: 10,
-                color: Colors.green,
+                width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () {}, child: const Text("Start"))),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) =>
+                              const LoginScreen(),
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.green,
+                      ),
+                    ),
+                    child: const Text(
+                      "Start",
+                      style: TextStyle(color: Colors.white),
+                    ))),
           ],
         ),
       ),
