@@ -36,7 +36,7 @@ class LoginScreen extends StatelessWidget {
     if (value.isEmpty) {
       return 'Password cannot be empty';
     } else if (value.length < 10) {
-      return 'Password must have at least 10 characters';
+      return 'Password must have more than 9 characters';
     } else if (!uppercasePattern.hasMatch(value)) {
       return 'Password must start with an uppercase letter';
     } else if (!specialCharPattern.hasMatch(value)) {
