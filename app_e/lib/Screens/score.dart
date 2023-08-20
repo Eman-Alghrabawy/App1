@@ -21,7 +21,7 @@ class ScoreScreen extends StatefulWidget {
 class _ScoreScreenState extends State<ScoreScreen> {
   @override
   void dispose() {
-    widget.usernameController.dispose(); // Clear the controller
+    widget.usernameController.clear(); // Clear the controller
     super.dispose();
   }
 
