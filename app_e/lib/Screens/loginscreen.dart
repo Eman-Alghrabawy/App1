@@ -1,12 +1,13 @@
 import 'package:app_e/Screens/category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:app_e/global/quizz_data.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   final _formkey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
 
   final TextEditingController _emailController = TextEditingController();
@@ -114,7 +115,7 @@ class LoginScreen extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.01,
                         ),
                         TextFormField(
-                          controller: _usernameController,
+                          controller: usernameController,
                           validator: _validateUsername,
                           decoration: InputDecoration(
                             labelText: 'Username',

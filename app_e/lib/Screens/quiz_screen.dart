@@ -1,32 +1,50 @@
 import 'package:app_e/Screens/score.dart';
+import 'package:app_e/global/quizz_data.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class QuizScreen extends StatelessWidget {
-  QuizScreen({super.key});
-  List answers = ["4 years", "8 years", "5 years", "6 years"];
+class QuizScreen extends StatefulWidget {
+  final Map categoryMap;
+  QuizScreen({super.key, required this.categoryMap});
+
+  @override
+  State<QuizScreen> createState() => _QuizScreenState();
+}
+
+class _QuizScreenState extends State<QuizScreen> {
+  int index = 0;
+  int totalScore = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: widget.categoryMap["color"],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           CircleAvatar(
             radius: 25,
-            backgroundColor: Colors.green,
-            child: Text('1/10',
+            backgroundColor: Colors.white,
+            child: Text(
+                "${index + 1}/${(widget.categoryMap["data"] as List).length}",
                 style: GoogleFonts.dancingScript(
                     fontSize: 20, color: Colors.black)),
           ),
           Text(
-            'Sports Quizz',
-            style: GoogleFonts.dancingScript(fontSize: 30, color: Colors.green),
+            (widget.categoryMap["CategoryName"]),
+            style: GoogleFonts.dancingScript(fontSize: 30, color: Colors.black),
           ),
           CircleAvatar(
             radius: 25,
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.white,
             child: Image.asset('images/logo3.png'),
           ),
         ]),
@@ -48,7 +66,7 @@ class QuizScreen extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(30))),
 
                 child: Text(
-                  'Question one:The Olympics are held every how many years?',
+                  widget.categoryMap["data"][index]["question"],
                   style: GoogleFonts.dancingScript(
                       fontSize: 35, color: Colors.black),
                 ),
@@ -63,7 +81,11 @@ class QuizScreen extends StatelessWidget {
                     color: Colors.black,
                     fontWeight: FontWeight.bold),
               ),
-              for (int i = 0; i < 4; i++)
+              for (int i = 0;
+                  i <
+                      (widget.categoryMap["data"][index]["answers"] as List)
+                          .length;
+                  i++)
                 Expanded(
                   child: Container(
                       margin: const EdgeInsets.symmetric(
@@ -72,20 +94,34 @@ class QuizScreen extends StatelessWidget {
                       child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
-                            Colors.white,
+                            widget.categoryMap["color"],
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  const ScoreScreen(),
-                            ),
-                          );
+                          totalScore = totalScore +
+                              widget.categoryMap["data"][index]["answers"][i]
+                                  ["score"] as int;
+                          if (index + 1 <
+                              (widget.categoryMap["data"] as List).length) {
+                            setState(() {
+                              index++;
+                            });
+                          } else {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) => ScoreScreen(
+                                  totalScore: totalScore,
+                                  totalnumofquestions: index + 1,
+                                  usernameController: usernameController,
+                                ),
+                              ),
+                            );
+                          }
                         },
                         child: Text(
-                          answers[i],
+                          (widget.categoryMap["data"][index]["answers"][i]
+                              ["ans"]),
                           style: const TextStyle(
                             color: Colors.black,
                           ),
@@ -93,7 +129,7 @@ class QuizScreen extends StatelessWidget {
                       )),
                 ),
             ],
-          )
+          ),
         ],
       ),
     );
