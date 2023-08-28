@@ -22,7 +22,7 @@ class CategoryScreen extends StatelessWidget {
               showExitConfirmationDialog(context);
               // Navigate back
             },
-            child: Icon(Icons.arrow_back),
+            child: const Icon(Icons.arrow_back),
           ),
         ),
       ]),
@@ -34,21 +34,21 @@ class CategoryScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Exit Confirmation"),
-          content: Text("Do you want to stay or exit the app?"),
+          title: const Text("Exit Confirmation"),
+          content: const Text("Do you want to stay or exit the app?"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text("Stay"),
+              child: const Text("Stay"),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
                 Navigator.of(context).pop(); // Close the current page
               },
-              child: Text("Exit"),
+              child: const Text("Exit"),
             ),
           ],
         );

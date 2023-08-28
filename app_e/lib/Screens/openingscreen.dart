@@ -2,8 +2,29 @@ import 'package:app_e/Screens/loginscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class OpeningScreen extends StatelessWidget {
+class OpeningScreen extends StatefulWidget {
   const OpeningScreen({super.key});
+
+  @override
+  State<OpeningScreen> createState() => _OpeningScreenState();
+}
+
+class _OpeningScreenState extends State<OpeningScreen>
+    with TickerProviderStateMixin {
+  late AnimationController _slidelogocontroller;
+  late AnimationController _fadeTextcontroller;
+  @override
+  void initState() {
+    super.initState();
+    _slidelogocontroller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 4));
+    _fadeTextcontroller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    );
+    _slidelogocontroller.forward();
+    _fadeTextcontroller.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +46,14 @@ class OpeningScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.3,
             ),
 
-            Image.asset(
-              "images/My project.png",
-              height: MediaQuery.of(context).size.height * 0.2,
+            SlideTransition(
+              position: Tween<Offset>(
+                      begin: const Offset(0, -1), end: const Offset(0, 0))
+                  .animate(_slidelogocontroller),
+              child: Image.asset(
+                "images/My project.png",
+                height: MediaQuery.of(context).size.height * 0.2,
+              ),
             ),
 
             if (MediaQuery.of(context).orientation == Orientation.landscape)
@@ -36,9 +62,17 @@ class OpeningScreen extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.3,
               ),
 
-            Text(
-              "ITI Quiz App",
-              style: GoogleFonts.pacifico(fontSize: 50, color: Colors.yellow),
+            FadeTransition(
+              opacity: _fadeTextcontroller,
+              child: Column(
+                children: [
+                  Text(
+                    "ITI Quiz App",
+                    style: GoogleFonts.pacifico(
+                        fontSize: 50, color: Colors.yellow),
+                  ),
+                ],
+              ),
             ),
 
             const SizedBox(
@@ -48,7 +82,7 @@ class OpeningScreen extends StatelessWidget {
             Text(
               "We are creative, enjoy our app",
               style:
-                  GoogleFonts.dancingScript(fontSize: 30, color: Colors.white),
+                  GoogleFonts.dancingScript(fontSize: 30, color: Colors.yellow),
             ),
 
             // SizedBox(

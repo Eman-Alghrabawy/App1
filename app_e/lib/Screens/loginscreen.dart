@@ -3,14 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_e/global/quizz_data.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen>
+    with TickerProviderStateMixin {
+  late AnimationController _fadelogocontroller;
+  @override
+  void initState() {
+    super.initState();
+    _fadelogocontroller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+
+    _fadelogocontroller.forward();
+  }
 
   final _formkey = GlobalKey<FormState>();
 
   final TextEditingController _passwordController = TextEditingController();
 
   final TextEditingController _emailController = TextEditingController();
+
   String? _validateUsername(String? value) {
     // Username validation logic here
     if (value == null || value.isEmpty) {
@@ -76,9 +93,12 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.07,
                   ),
-                  Image.asset(
-                    "images/logo.png",
-                    height: MediaQuery.of(context).size.height * 0.2,
+                  FadeTransition(
+                    opacity: _fadelogocontroller,
+                    child: Image.asset(
+                      "images/logo.png",
+                      height: MediaQuery.of(context).size.height * 0.2,
+                    ),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,

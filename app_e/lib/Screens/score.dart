@@ -7,7 +7,7 @@ class ScoreScreen extends StatefulWidget {
   final int totalScore;
   final int totalnumofquestions;
   final TextEditingController usernameController;
-  ScoreScreen({
+  const ScoreScreen({
     super.key,
     required this.totalScore,
     required this.totalnumofquestions,
@@ -19,6 +19,19 @@ class ScoreScreen extends StatefulWidget {
 }
 
 class _ScoreScreenState extends State<ScoreScreen> {
+  bool _animateContent = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Trigger animation after a short delay when the screen is loaded.
+    Future.delayed(Duration(milliseconds: 300), () {
+      setState(() {
+        _animateContent = true;
+      });
+    });
+  }
+
   @override
   void dispose() {
     widget.usernameController.clear(); // Clear the controller
@@ -29,7 +42,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 229, 68, 122),
+        backgroundColor: const Color.fromARGB(255, 229, 68, 122),
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Text(
@@ -45,61 +58,77 @@ class _ScoreScreenState extends State<ScoreScreen> {
       ),
       backgroundColor: Colors.white,
       body: Center(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(30),
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: Center(
-                child: RichText(
-                    text: TextSpan(
-                        text: "Congrates, ",
+        child: Opacity(
+          opacity: _animateContent ? 1.0 : 0.0,
+          child: Transform.translate(
+            offset: Offset(0.0, _animateContent ? 0.0 : 50.0),
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(30),
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Congrats, ",
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         children: [
-                      TextSpan(
-                          text: " ${widget.usernameController.text}",
-                          style: GoogleFonts.dancingScript(
-                              color: Color.fromARGB(255, 70, 67, 67),
-                              fontSize: 30)),
-                      const TextSpan(text: " ,your score is "),
-                      TextSpan(
-                          text:
-                              "${widget.totalScore}/${widget.totalnumofquestions}",
-                          style: GoogleFonts.dancingScript(
-                              color: Color.fromARGB(255, 70, 67, 67),
-                              fontSize: 30)),
-                    ])),
-              ),
-            ),
-            const Spacer(),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              width: double.infinity,
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil<void>(
-                      context,
-                      MaterialPageRoute<void>(
-                          builder: (BuildContext context) =>
-                              const OpeningScreen()),
-                      (Route<dynamic> route) => false,
-                    );
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      Color.fromARGB(255, 229, 68, 122),
+                          TextSpan(
+                            text: " ${widget.usernameController.text}",
+                            style: GoogleFonts.dancingScript(
+                              color: const Color.fromARGB(255, 70, 67, 67),
+                              fontSize: 30,
+                            ),
+                          ),
+                          const TextSpan(text: " ,your score is "),
+                          TextSpan(
+                            text:
+                                "${widget.totalScore}/${widget.totalnumofquestions}",
+                            style: GoogleFonts.dancingScript(
+                              color: const Color.fromARGB(255, 70, 67, 67),
+                              fontSize: 30,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  child: Text(
-                    "Play again",
-                    style: GoogleFonts.dancingScript(
+                ),
+                const Spacer(),
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  width: double.infinity,
+                  height: _animateContent ? 100 : 0,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil<void>(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) =>
+                              const OpeningScreen(),
+                        ),
+                        (Route<dynamic> route) => false,
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color.fromARGB(255, 229, 68, 122),
+                      ),
+                    ),
+                    child: Text(
+                      "Play again",
+                      style: GoogleFonts.dancingScript(
                         fontSize: 60,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  )),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

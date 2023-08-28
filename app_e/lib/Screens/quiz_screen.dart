@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class QuizScreen extends StatefulWidget {
   final Map categoryMap;
-  QuizScreen({super.key, required this.categoryMap});
+  const QuizScreen({super.key, required this.categoryMap});
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -16,6 +16,9 @@ class _QuizScreenState extends State<QuizScreen> {
   int index = 0;
   int totalScore = 0;
 
+  double _questionOpacity = 1.0;
+  double _choicesOpacity = 1.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +26,7 @@ class _QuizScreenState extends State<QuizScreen> {
       appBar: AppBar(
         backgroundColor: widget.categoryMap["color"],
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -56,19 +59,21 @@ class _QuizScreenState extends State<QuizScreen> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
-              Container(
-                padding: const EdgeInsets.all(20),
-                height: MediaQuery.of(context).size.height * 0.25, // width: 50,
-                width: double.infinity,
-
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(30))),
-
-                child: Text(
-                  widget.categoryMap["data"][index]["question"],
-                  style: GoogleFonts.dancingScript(
-                      fontSize: 35, color: Colors.black),
+              AnimatedOpacity(
+                opacity: _questionOpacity,
+                duration: Duration(milliseconds: 500),
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(30))),
+                  child: Text(
+                    widget.categoryMap["data"][index]["question"],
+                    style: GoogleFonts.dancingScript(
+                        fontSize: 35, color: Colors.black),
+                  ),
                 ),
               ),
               SizedBox(
@@ -86,8 +91,11 @@ class _QuizScreenState extends State<QuizScreen> {
                       (widget.categoryMap["data"][index]["answers"] as List)
                           .length;
                   i++)
-                Expanded(
-                  child: Container(
+                AnimatedOpacity(
+                  opacity: _choicesOpacity,
+                  duration: Duration(milliseconds: 500),
+                  child: Expanded(
+                    child: Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 10),
                       width: 300,
@@ -104,7 +112,15 @@ class _QuizScreenState extends State<QuizScreen> {
                           if (index + 1 <
                               (widget.categoryMap["data"] as List).length) {
                             setState(() {
-                              index++;
+                              _questionOpacity = 0.0;
+                              _choicesOpacity = 0.0;
+                            });
+                            Future.delayed(Duration(milliseconds: 500), () {
+                              setState(() {
+                                index++;
+                                _questionOpacity = 1.0;
+                                _choicesOpacity = 1.0;
+                              });
                             });
                           } else {
                             Navigator.pushReplacement(
@@ -126,7 +142,9 @@ class _QuizScreenState extends State<QuizScreen> {
                             color: Colors.black,
                           ),
                         ),
-                      )),
+                      ),
+                    ),
+                  ),
                 ),
             ],
           ),
